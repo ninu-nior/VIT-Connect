@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:vit_connect_plus/common/widgets/appbar.dart';
 import 'package:vit_connect_plus/common/widgets/circular_container.dart';
 import 'package:vit_connect_plus/features/home/screens/laundry_screen.dart';
+import 'package:vit_connect_plus/features/home/screens/repair_screen.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,95 +31,126 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {});
                 }),
             Container(
-              color: MyColors.lightContainer,
+              color: MyColors.white,
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Need Room Repairs ?",
-                      style: Theme.of(context).textTheme.displayMedium,
+                    const Text(
+                      "Good Morning,",
+                      style: TextStyle(
+                          color: MyColors.darkerGrey,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const Text(
+                      "Juhi Mantri",
+                      style: TextStyle(
+                          color: MyColors.darkerGrey,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 16,
                     ),
-                    Row(children: [Container()],),
                     Row(
-                      children: [
-                        Container(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            value: selectedRepair,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedRepair = value;
-                              });
-                            },
-                            items: [
-                              'AC Repair',
-                              'Fan Repair',
-                              'Light Repair',
-                              'Table Light Repair',
-                              'Other Electrical',
-                              'Furniture Repair'
-                            ]
-                                .map((repair) => DropdownMenuItem(
-                                      value: repair,
-                                      child: Text(
-                                        repair,
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                    ))
-                                .toList(),
-                            decoration: InputDecoration(
-                              labelText: 'Select Repair Type',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          width: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (selectedRepair != null) {
-                                setState(() {
-                                  repairHistory.add(selectedRepair!);
-                                });
-                              }
-                            },
-                            child: Icon(Iconsax.tick_square),
-                          ),
-                        )
-                      ],
+                      children: [Container()],
+                    ),
+                    Row(
+                      children: [],
                     ),
                   ],
                 ),
               ),
             ),
-            Container(
-              color: MyColors.success.withOpacity(0.5),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RepairScreen()),
+                );
+              },
+              child: Container(
+                height: 170,
+                color: MyColors.primary,
+                width: double.infinity,
+                child: Row(
                   children: [
-                    Text(
-                      "",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .apply(color: MyColors.darkerGrey),
-                    ),
-                    ElevatedButton((){}
-                      
-                      child: Text("Check Days"),
+                    Image.asset("assets/images/repair.png"),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Need Room ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .apply(color: MyColors.lightContainer),
+                          ),
+                          Text(
+                            "Repairs ?",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          Text(
+                            "___________",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
               ),
-            )
+            ),
+            SizedBox(
+              height: 26,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LaundryScreen()),
+                );
+              },
+              child: Container(
+                height: 170,
+                color: MyColors.primary.withOpacity(0.6),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Check laundry ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .apply(color: MyColors.lightContainer),
+                          ),
+                          Text(
+                            "Schedule ?",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .apply(fontSizeFactor: 1),
+                          ),
+                          Text(
+                            "___________",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Image.asset("assets/images/washing.png"),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -149,7 +183,7 @@ class HomeAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Welcome Back,",
+            "",
             style: Theme.of(context)
                 .textTheme
                 .labelLarge!
@@ -157,11 +191,11 @@ class HomeAppBar extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            "Juhi Mantri",
+            "",
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
-                .apply(color: MyColors.darkerGrey),
+                .apply(color: Colors.black),
           ),
         ],
       ),
