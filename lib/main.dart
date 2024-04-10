@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vit_connect_plus/features/authentication/login.dart';
 import 'package:vit_connect_plus/navigation_menu.dart';
 import 'package:vit_connect_plus/utils/theme/theme.dart';
 
@@ -19,6 +20,6 @@ class MainApp extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         //dark theme
         darkTheme: TAppTheme.darkTheme,
-        home: NavigationMenu());
+        home: LoginScreen());
   }
 }
