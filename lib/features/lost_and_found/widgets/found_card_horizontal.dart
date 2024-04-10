@@ -8,7 +8,7 @@ import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
 import 'dart:convert'; // Import dart:convert to use jsonEncode
-class FoundCardHorizontal extends StatelessWidget {
+class FoundCardHorizontal extends StatefulWidget {
   final String name;
   final String date;
   final String location;
@@ -24,14 +24,17 @@ class FoundCardHorizontal extends StatelessWidget {
       required this.imageUrl,
       required this.foundID});
 
-  
+  @override
+  State<FoundCardHorizontal> createState() => _FoundCardHorizontalState();
+}
 
+class _FoundCardHorizontalState extends State<FoundCardHorizontal> {
 Future<void> sendPostRequest() async {
   // Define your endpoint URL
   try {
     // Convert your data to JSON format
     Map<String, dynamic> requestData = {
-      'found_id': foundID
+      'found_id': widget.foundID
     };
     String jsonData = jsonEncode(requestData);
 
@@ -57,8 +60,10 @@ Future<void> sendPostRequest() async {
     // An error occurred while sending the request
     print('Error sending POST request: $error');
   }
+  setState(() {
+    
+  });
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +86,7 @@ Future<void> sendPostRequest() async {
                 children: [
                   RoundedImage(
                     isNetworkImage: true,
-                    imageUrl: imageUrl,
+                    imageUrl: widget.imageUrl,
                     applyImageRadius: true,
                   ),
                   Positioned(
@@ -110,7 +115,7 @@ Future<void> sendPostRequest() async {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    widget.name,
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
@@ -120,7 +125,7 @@ Future<void> sendPostRequest() async {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    date,
+                    widget.date,
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium!
@@ -130,14 +135,14 @@ Future<void> sendPostRequest() async {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    location,
+                    widget.location,
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    contact,
+                    widget.contact,
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
@@ -147,8 +152,11 @@ Future<void> sendPostRequest() async {
                     height: 0,
                   ),
                   OutlinedButton(
-                    onPressed: () {
-                      sendPostRequest();
+                    onPressed: ()async {
+                     await sendPostRequest();
+                      setState(() {
+                        // Update the UI
+                      });
                     },
                     child: const Text('Returned it?'),
                   ),

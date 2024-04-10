@@ -216,7 +216,13 @@ class _DoctorAppointmentPageState extends State<DoctorAppointmentPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      AppointmentConfirmationPage()),
+                                      AppointmentConfirmationPage(
+
+                                        name:"User A",
+                                        doctor: widget.doctorName,
+                                        date: selectedDate.day.toString(),
+                                        time: selectedSlot.toString(),
+                                      )),
                             );
                           },
                           child: Text("Confirm Appointment")),
@@ -246,11 +252,11 @@ class AppointmentForm extends StatelessWidget {
 class AppointmentConfirmationPage extends StatelessWidget {
   final String? name;
   final String? doctor;
-  final String? reason;
+  final String? reason="Therapy";
   final String? date;
   final String? time;
 
-  AppointmentConfirmationPage({this.name, this.doctor, this.reason, this.date, this.time});
+  AppointmentConfirmationPage({this.name, this.doctor, this.date, this.time});
   @override
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);

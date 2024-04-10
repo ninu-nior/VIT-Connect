@@ -147,7 +147,7 @@ class LoginHeader extends StatelessWidget {
             SizedBox(height: Sizes.sm),
             SizedBox(height: Sizes.sm),
             Text(
-              "Discover Limitless choices and Unmatched Convenience",
+              "Everything you need, All in one place",
               style: Theme.of(context).textTheme.bodyMedium,
             )
           ]),

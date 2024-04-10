@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:vit_connect_plus/features/people_finder/screens/car_pool_users.dart';
+import 'package:vit_connect_plus/utils/constants/api_endpoints.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
+import 'package:http/http.dart' as http;
 
 class CarPoolingScreen extends StatefulWidget {
   @override
@@ -12,6 +17,7 @@ class CarPoolingScreen extends StatefulWidget {
 class _CarPoolingScreenState extends State<CarPoolingScreen> {
   TimeOfDay? fromTime;
   TimeOfDay? toTime;
+  final destinationController = TextEditingController();
 
   Future<void> _selectFromTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -36,6 +42,28 @@ class _CarPoolingScreenState extends State<CarPoolingScreen> {
         toTime = picked;
       });
       //print('To Time: ${picked.hour}:${picked.minute}');
+    }
+  }
+
+  Future<List<dynamic>> sendPostRequest(String timeSlot, String destination) async {
+    final response = await http.post(
+      Uri.parse(reteiveCarPools),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'time_slot': timeSlot,
+        'destination': destination,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+      // If the server returns a 200 OK response, parse the JSON.
+      print('Data sent successfully');
+    } else {
+      // If the server returns an unsuccessful response code, throw an exception.
+      throw Exception('Failed to send data');
     }
   }
 
@@ -127,6 +155,7 @@ class _CarPoolingScreenState extends State<CarPoolingScreen> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: destinationController,
                     decoration:
                         InputDecoration(prefixIcon: Icon(Iconsax.location)),
                   ),
@@ -148,9 +177,17 @@ class _CarPoolingScreenState extends State<CarPoolingScreen> {
                             },
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async{
+                          String fromHour =
+                              fromTime!.hour.toString().padLeft(2, '0');
+                          String toHour =
+                              toTime!.hour.toString().padLeft(2, '0');
+                            List<dynamic> data = await sendPostRequest(fromHour + toHour, destinationController.text);
                           // Navigate back to the home page
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CarPoolUsersScreen(users: data,)));
                         },
                         child: Text("Search for people")),
                   ),

@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:vit_connect_plus/features/people_finder/screens/roommate_users.dart';
+import 'package:vit_connect_plus/utils/constants/api_endpoints.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
+import 'package:http/http.dart' as http;
 
 class RoommateFinderScreen extends StatefulWidget {
   @override
@@ -12,6 +17,26 @@ class _RoommateFinderScreenState extends State<RoommateFinderScreen> {
   String? selectedBlock;
   String? selectedRoomType;
   String? selectedACNAC;
+
+  Future<List<Map<String, dynamic>>> sendPostRequest() async {
+    final response = await http.post(
+      Uri.parse(retrieveRoommates),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'block_name': selectedBlock!,
+        'bed_type': selectedRoomType!,
+        'room_type': selectedACNAC!,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      throw Exception('Failed to send data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,28 +67,6 @@ class _RoommateFinderScreenState extends State<RoommateFinderScreen> {
                   Text(
                     "Looking for a Roommate ?",
                     style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  SizedBox(height: 20),
-                  DropdownButtonFormField<String>(
-                    value: selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedGender = value;
-                      });
-                    },
-                    items: ['Male', 'Female']
-                        .map((gender) => DropdownMenuItem(
-                              value: gender,
-                              child: Text(
-                                gender,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                            ))
-                        .toList(),
-                    decoration: InputDecoration(
-                      labelText: 'Gender',
-                      border: OutlineInputBorder(),
-                    ),
                   ),
                   SizedBox(height: 20),
                   DropdownButtonFormField<String>(
@@ -151,9 +154,20 @@ class _RoommateFinderScreenState extends State<RoommateFinderScreen> {
                             },
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          try {
+                            final response = await sendPostRequest();
+                            // Do something with the response
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RoommateUsersScreen(
+                                          users: response,
+                                        )));
+                          } catch (e) {
+                            print(e);
+                          }
                           // Navigate back to the home page
-                          Navigator.popUntil(context, (route) => route.isFirst);
                         },
                         child: Text("Search for people")),
                   ),

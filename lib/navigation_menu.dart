@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:vit_connect_plus/features/healthcare/screens/health_care_screen.dart';
 import 'package:vit_connect_plus/features/home/screens/home_screen.dart';
 import 'package:vit_connect_plus/features/lost_and_found/screens/lost_and_found_screen.dart';
-import 'package:vit_connect_plus/features/people_finder/screens/people_finder_screen.dart';
+import 'package:vit_connect_plus/features/people_finder/screens/people_finder.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
 
@@ -57,7 +57,7 @@ class NavigationController extends GetxController {
   final screens = [
     const HomeScreen(),
     const HealthCareScreen(),
-    PeopleFinderScreen(),
+     PeopleFinderScreen(),
     const LostAndFoundScreen()
   ];
 }

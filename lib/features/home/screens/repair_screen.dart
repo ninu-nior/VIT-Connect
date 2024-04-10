@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 
-class RepairScreen extends StatelessWidget {
+class RepairScreen extends StatefulWidget {
   const RepairScreen({Key? key});
 
   @override
-  Widget build(BuildContext context) {
-    String? selectedOption;
+  _RepairScreenState createState() => _RepairScreenState();
+}
 
+class _RepairScreenState extends State<RepairScreen> {
+  String? selectedOption;
+  List<Map<String, dynamic>> selectedOptionsList = []; // Corrected declaration
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Repairs"),
@@ -23,23 +29,83 @@ class RepairScreen extends StatelessWidget {
             SizedBox(height: 32),
             MyDropdownFormField(
               onChanged: (value) {
-                selectedOption = value;
+                setState(() {
+                  selectedOption = value;
+                });
               },
             ),
-            SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                // Handle button press with selectedOption value
-                if (selectedOption != null) {
-                  print("Selected option: $selectedOption");
-                  // Add your logic here to handle the selected option
-                } else {
-                  print("No option selected");
-                }
-              },
-              child: Text("Submit"),
+            SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (selectedOption != null) {
+                    setState(() {
+                      selectedOptionsList.add({
+                        'category': selectedOption!,
+                        'fixed': false,
+                      });
+                      selectedOption =
+                          null; // Clear selectedOption after adding
+                    });
+                  }
+                },
+                child: Text("Add to List"),
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              "Selected Options:",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: selectedOptionsList
+                  .asMap()
+                  .entries
+                  .map((entry) => RepairCard(
+                        category: entry.value['category'],
+                        fixed: entry.value['fixed'],
+                        onTap: () {
+                          setState(() {
+                            selectedOptionsList[entry.key]['fixed'] =
+                                !entry.value['fixed'];
+                          });
+                        },
+                      ))
+                  .toList(),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RepairCard extends StatelessWidget {
+  final String category;
+  final bool? fixed;
+  final VoidCallback onTap;
+
+  const RepairCard({
+    required this.category,
+    required this.fixed,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(category),
+        trailing: IconButton(
+          icon: Icon(
+            fixed! ? Icons.check_circle : Icons.radio_button_unchecked,
+            color: fixed! ? Colors.green : Colors.blue,
+          ),
+          onPressed: onTap,
         ),
       ),
     );

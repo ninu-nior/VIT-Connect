@@ -124,6 +124,46 @@ class SignupForm extends StatelessWidget {
           const SizedBox(
             height: Sizes.spacebtwitems,
           ),
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  expands: false,
+                  decoration: InputDecoration(
+                    labelText: "Room Number",
+                    prefixIcon: Icon(Iconsax.user),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: Sizes.spacebtwitems,
+              ),
+              Expanded(
+                child: TextFormField(
+                  expands: false,
+                  decoration: InputDecoration(
+                    labelText: "Block",
+                    prefixIcon: Icon(Iconsax.building),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: Sizes.spacebtwitems,
+              ),
+              Expanded(
+                child: TextFormField(
+                  expands: false,
+                  decoration: InputDecoration(
+                    labelText: "Mess",
+                    prefixIcon: Icon(Iconsax.add),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            width: Sizes.spacebtwitems,
+          ),
 
           //terms and conditions checkbox
           Row(

@@ -230,12 +230,14 @@ class _FoundItemAddState extends State<FoundItemAdd> {
                                         if (widget._formKey.currentState!
                                             .validate()) {
                                           widget._formKey.currentState!.save();
-
+                                              String date = selectedDate.toString();
                                           var request = http.MultipartRequest(
                                               'POST', Uri.parse(addFoundItem));
+                                          
 
                                           request.fields['name'] =
                                               itemNameController.text;
+                                              request.fields['date_found'] = date;
                                           request.fields['place'] =
                                               foundAtController.text;
                                           request.fields['contact'] =
@@ -330,6 +332,7 @@ class LostScreen extends StatelessWidget {
       // _foundItemsController.addError(e);
     }
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -761,10 +764,10 @@ class _LostItemAddState extends State<LostItemAdd> {
                                         if (widget._formKey2.currentState!
                                             .validate()) {
                                           widget._formKey2.currentState!.save();
-
+                                          final date =selectedDate.toString();
                                           var request = http.MultipartRequest(
                                               'POST', Uri.parse(addLostItem));
-
+                                            request.fields['date_found'] = date;
                                           request.fields['name'] =
                                               itemNameController.text;
                                           request.fields['place'] =
@@ -790,7 +793,9 @@ class _LostItemAddState extends State<LostItemAdd> {
                                           } else {
                                             print('Failed to upload.');
                                           }
+                                          
                                         }
+                                        setState(() {});
                                       },
                                     ),
                                   )

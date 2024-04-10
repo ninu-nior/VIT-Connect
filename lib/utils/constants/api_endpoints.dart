@@ -1,4 +1,4 @@
-const String url = "http://10.0.2.2:5000";
+const String url = "http://192.168.186.237:5000";
 
 const String retreiveAllFoundItems = "$url/retreive_all_found_items";
 const String retreiveUserFoundItems = "$url/retreive_found_item_user";
@@ -13,3 +13,9 @@ const String deleteLostItem = "$url/delete_lost_item";
 const String retreiveAllDoctors = "$url/retreive_all_doctor_details";
 const String retreiverSlots = "$url/retreiveTimeList";
 const String bookAppointment = "$url/book";
+const String retreiveAppointments = "$url/get_appointment_history";
+
+const String reteiveCarPools = "$url/retrieve_carpooling_details";
+const String addCarPool = "$url/add_carpooling_details";
+
+const String retrieveRoommates = "$url/retrieve_name_of_all_roomies";

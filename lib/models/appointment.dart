@@ -1,13 +1,22 @@
 class Appointment {
-  final String doctorId;
-  final String userId;
+  final String doctorName;
+  final String userName;
+  final String date;
   final String time;
-  final String day;
 
   Appointment({
-    required this.doctorId,
-    required this.userId,
+    required this.doctorName,
+    required this.userName,
+    required this.date,
     required this.time,
-    required this.day,
   });
+
+  factory Appointment.fromJson(Map<String, dynamic> json) {
+    return Appointment(
+      doctorName: json['doctor_name'],
+      userName: json['user_name'],
+      date: json['date'].toString(),
+      time: json['time'].toString(),
+    );
+  }
 }
