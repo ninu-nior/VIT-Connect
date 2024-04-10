@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:vit_connect_plus/common/widgets/appbar.dart';
 import 'package:vit_connect_plus/common/widgets/circular_container.dart';
 import 'package:vit_connect_plus/features/home/screens/laundry_screen.dart';
+import 'package:vit_connect_plus/features/home/screens/mess_menu_screen.dart';
 import 'package:vit_connect_plus/features/home/screens/repair_screen.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 
@@ -147,6 +148,50 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Image.asset("assets/images/washing.png"),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 26,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MessMenuScreen()),
+                );
+              },
+              child: Container(
+                height: 170,
+                color: MyColors.primary.withOpacity(0.85),
+                width: double.infinity,
+                child: Row(
+                  children: [
+                    Image.asset("assets/images/mess.png"),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Check Mess ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge!
+                                .apply(color: MyColors.lightContainer),
+                          ),
+                          Text(
+                            "Menu ?",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          Text(
+                            "___________",
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
