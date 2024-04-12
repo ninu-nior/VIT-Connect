@@ -4,18 +4,18 @@
 
 
 <hr>
-<img src="display\healthcare.png">
+<img src="display/healthcare.png">
 
-<img src="display\healthcare-screens.png">
+<img src="display/healthcare-screens.png">
 <hr>
-<img src="display\lost_and_found.png">
+<img src="display/lost_and_found.png">
 <hr>
-<img src="display\carpool.png">
-<img src="display\carpool-ss.png">
+<img src="display/carpool.png">
+<img src="display/carpool-ss.png">
 
-<img src="display\roommate finder.png">
+<img src="display/roommate finder.png">
 <hr>
 <img src="display/hostel.png">
-<img src="display\hostel_screens.png">
+<img src="display/hostel_screens.png">
 <hr>
 
